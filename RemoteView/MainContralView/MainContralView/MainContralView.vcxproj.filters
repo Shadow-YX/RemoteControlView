@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="远程CMD">
+      <UniqueIdentifier>{0186a1c6-df0a-403d-9122-b1686628cc03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="远程文件管理">
+      <UniqueIdentifier>{86e93a07-a8d7-4d69-a1e9-b905a1545970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="登录界面">
+      <UniqueIdentifier>{f6d1e9ab-2962-4fae-b032-e95325ebed2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="主界面">
+      <UniqueIdentifier>{af1bde5a-59ab-4e46-a2f9-ce6e6e86ba68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="socket">
+      <UniqueIdentifier>{04341b15-339c-456e-a279-448edf331c61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="同步锁">
+      <UniqueIdentifier>{ef429166-e163-4b0e-89e9-fd54c256436b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MainContralView.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MainContralViewDoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CLock.h">
+      <Filter>同步锁</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpSocket.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="InitSockLib.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="CCMD.h">
+      <Filter>远程CMD</Filter>
+    </ClInclude>
+    <ClInclude Include="CCheckFile.h">
+      <Filter>远程文件管理</Filter>
+    </ClInclude>
+    <ClInclude Include="MainContralViewView.h">
+      <Filter>主界面</Filter>
+    </ClInclude>
+    <ClInclude Include="CSetLocalInf.h">
+      <Filter>登录界面</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MainContralViewDoc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CLock.cpp">
+      <Filter>同步锁</Filter>
+    </ClCompile>
+    <ClCompile Include="InitSockLib.cpp">
+      <Filter>socket</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpSocket.cpp">
+      <Filter>socket</Filter>
+    </ClCompile>
+    <ClCompile Include="CCMD.cpp">
+      <Filter>远程CMD</Filter>
+    </ClCompile>
+    <ClCompile Include="CCheckFile.cpp">
+      <Filter>远程文件管理</Filter>
+    </ClCompile>
+    <ClCompile Include="CSetLocalInf.cpp">
+      <Filter>登录界面</Filter>
+    </ClCompile>
+    <ClCompile Include="MainContralView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MainContralViewView.cpp">
+      <Filter>主界面</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MainContralView.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\MainContralView.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\MainContralViewDoc.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\MainContralView.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

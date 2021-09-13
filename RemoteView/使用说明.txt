@@ -1,0 +1,7 @@
+支持x64编译
+
+本地测试：先启动主控端（MainControl.exe）点击启动->连接服务器)输入127.0.0.1和任意开放的端口，
+再启动被控端(ControlServer.exe)输入相同的IP地址和端口。
+
+非本地（虚拟机）:把服务端（ControlServer.exe）拷贝至靶机并打开，先启动主控端（MainControl.exe)
+输入本地IP和任意开放的端口，再启动被控端(ControlServer.exe)输入主控端的IP地址和端口。
