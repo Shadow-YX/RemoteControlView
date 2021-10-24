@@ -9,3 +9,5 @@
   输入本地IP和任意开放的端口，再启动被控端(ControlServer.exe)输入主控端的IP地址和端口
 
 本项目开源但不允许商用，仅用于学习交流，严禁用于非法活动，不承担法律责任。
+
+![图片](https://user-images.githubusercontent.com/57027996/138595853-87c055a4-40b7-4f9e-87f5-f24f728a0c02.png)
